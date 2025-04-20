@@ -77,7 +77,7 @@ Xenia_addESConfig(){
 		--subnode '$newSystem' --type elem --name 'fullname' -v 'Microsoft Xbox 360' \
 		--subnode '$newSystem' --type elem --name 'path' -v '%ROMPATH%/xbox360/roms' \
 		--subnode '$newSystem' --type elem --name 'extension' -v '.iso .ISO . .xex .XEX' \
-		--subnode '$newSystem' --type elem --name 'commandP' -v "%STARTDIR%=%EMUDIR% %EMULATOR_XENIA% %INJECT%=%BASENAME%.commands %ROM%" \
+		--subnode '$newSystem' --type elem --name 'commandP' -v "%STARTDIR%=%EMUDIR% %EMULATOR_XENIALIN% %INJECT%=%BASENAME%.commands %ROM%" \
 		--insert '$newSystem/commandP' --type attr --name 'label' --value "Xenia Canary (Linux)" \
 		--subnode '$newSystem' --type elem --name 'platform' -v 'xbox360' \
 		--subnode '$newSystem' --type elem --name 'theme' -v 'xbox360' \
