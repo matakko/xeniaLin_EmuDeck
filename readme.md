@@ -9,3 +9,12 @@ Do not try this if you dont know what you doing !
 
 
 https://github.com/xenia-canary/xenia-canary-releases/releases
+
+
+Launch options : 
+
+https://github.com/xenia-canary/xenia-canary/wiki/Options
+
+
+Further infos for ES-DE  add system
+https://gitlab.com/es-de/emulationstation-de/-/blob/master/INSTALL.md#es_systemsxml
