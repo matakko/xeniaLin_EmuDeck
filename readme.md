@@ -8,6 +8,9 @@ Do not try this if you dont know what you doing !
 ## Do not try this if you dont know what you doing !
 
 
+
+infos : 
+
 https://github.com/xenia-canary/xenia-canary-releases/releases
 
 
