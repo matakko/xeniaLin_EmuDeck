@@ -1,6 +1,6 @@
 #!/bin/bash
 #variables
-Xenia_emuName="Xenia"
+Xenia_emuName="xenialin"
 Xenia_emuType="$emuDeckEmuTypeBinary"
 Xenia_emuPath="$emusFolder"
 Xenia_releaseURL_canary="https://github.com/xenia-canary/xenia-canary-releases/releases/latest/download/xenia_canary_linux.tar.gz"
@@ -22,6 +22,7 @@ Xenia_install(){
 
     if installEmuBI "$Xenia_emuName" "$Xenia_releaseURL_canary" "$archiveName" "tar.gz" "$showProgress"; then
         mkdir -p "$Xenia_dir/content"
+        mkdir -p "$Xenia_dir/patches"
         tar -xvf "$emusFolder/${archiveName}.tar.gz" -C "$Xenia_emuPath"
         rm -f "$emusFolder/${archiveName}.tar.gz"
         mv "$Xenia_emuPath/LICENSE" "$Xenia_dir/LICENSE"
@@ -35,14 +36,14 @@ Xenia_install(){
 Xenia_init(){
 	echo "Initializing Xenia Config"
 
-    mkdir -p "$romsPath/xbox360/roms/xbla" #doest it need to be symlink to local/share/xenia  ? TODO
-    configEmuAI "Xenia" "config" "$Xenia_dir" "$emudeckBackend/configs/xenia" "true"
+    mkdir -p "$romsPath/xbox360/roms/xbla" 
+    configEmuAI "Xenia" "config" "$Xenia_dir" "$emudeckBackend/configs/xenialin" "true"
 
-#    Xenia_setupStorage TODO (pehaps modfiy path patches ? )
+    Xenia_setupStorage
     Xenia_setupSaves
     Xenia_getPatches
 #    Xenia_finalize TODO check if we need to add some clean
-  Xenia_flushEmulatorLauncher
+    Xenia_flushEmulatorLauncher
 	if [ -e "$ESDE_toolPath" ] || [ -f "${toolsPath}/$ESDE_downloadedToolName" ] || [ -f "${toolsPath}/$ESDE_oldtoolName.AppImage" ]; then
 		Xenia_addESConfig
 	else
@@ -54,7 +55,8 @@ Xenia_init(){
 Xenia_update(){
 	echo "NYI"
 	Xenia_setupSaves
-#	Xenia_getPatches  TODO verify if its ok to do 
+	Xenia_setupStorage
+	Xenia_getPatches  
 	Xenia_flushEmulatorLauncher
 }
 
@@ -101,19 +103,20 @@ Xenia_getPatches() {
 		{ curl -L "$patches_url" -o "$Xenia_dir/game-patches.zip" && nice -n 5 unzip -uqo "$Xenia_dir/game-patches.zip" -d "$Xenia_dir" && rm "$Xenia_dir/game-patches.zip"; } &> /dev/null
 		echo "Xenia patches updated."
 	fi
-#	linkTo.... xenia STORAGE? "$Xenia_dir/patches" TODO
+#	linkTo.... xenia STORAGE? or should we fusion Xenia_getPatches and Xenia_setupstorage ? 
 }
 
 #SetupSaves
 Xenia_setupSaves(){
 	mkdir -p "$Xenia_dir/content"
-#	linkToSaveFolder xenia saves "$Xenia_dir/content" Or to Rom folders ? TODO
+	linkToSaveFolder xenialin saves "$Xenia_dir/content" 
 }
 
 
 #SetupStorage
 Xenia_setupStorage(){
-	echo "NYI"
+	mkdir -p "$Xenia_dir/patches"
+	linkToStorageFolder xenialin patches "$Xenia_dir/patches"
 }
 
 
@@ -125,14 +128,12 @@ Xenia_wipeSettings(){
 
 #Uninstall
 Xenia_uninstall(){
-	echo "NYI"
-# TODO idk what to remove for now a part local/share/xenia and Applications/xenia_canary . launcher maybe ?
-#	setMSG "Uninstalling $Xenia_emuName. Saves and ROMs will be retained in the ROMs folder."
-#	find ${romsPath}/xbox360 -mindepth 1 \( -name roms -o -name content \) -prune -o -exec rm -rf '{}' \; &>> /dev/null
-#	rm -rf $HOME/.local/share/applications/xenia.desktop &> /dev/null
-#	rm -rf "${toolsPath}/launchers/xenia.sh"
-#	rm -rf "$romsPath/emulators/xenia.sh"
-#	rm -rf "$romsPath/xbox360/xenia.sh"
+	setMSG "Uninstalling $Xenia_emuName. Saves and ROMs will be retained in the ROMs folder."
+#	find ${romsPath}/xbox360 -mindepth 1 \( -name roms -o -name content \) -prune -o -exec rm -rf '{}' \; &>> /dev/null  IDK TODO
+	rm -rf $HOME/.local/share/applications/xenialin.desktop &> /dev/null #idk if its the right name not sure TODO
+	rm -rf "${toolsPath}/launchers/xenialin.sh"
+	rm -rf "$romsPath/emulators/xenialin.sh"
+#	rm -rf "$romsPath/xbox360/xenialin.sh" not needed anymore unless i forgot somothing TODO
 }
 
 #setABXYstyle
@@ -203,5 +204,5 @@ Xenia_cleanESDE(){
 }
 
 Xenia_flushEmulatorLauncher(){
-	flushEmulatorLaunchers "xenia"
+	flushEmulatorLaunchers "xenialin"
 }
