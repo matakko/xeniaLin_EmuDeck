@@ -1,4 +1,4 @@
-# XeniaLin scrip try
+# XeniaLin install  try
 
 Repos for trying install xenia_canary Lin with Emudeck 
 Very early still having issue  
