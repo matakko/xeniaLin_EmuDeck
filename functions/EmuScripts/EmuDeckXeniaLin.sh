@@ -8,7 +8,7 @@ Xenia_dir="$HOME/.local/share/Xenia"
 Xenia_XeniaSettings="$HOME/.local/share/Xenia/xenia-canary.config.toml"
 # check TODO for find stuff todo or to finish
 
-#cleanupOlderThings TODO
+#cleanupOlderThings TODO idk what we suposed to add and same for Xenia_finalize
 Xenia_cleanup(){
 	echo "NYI"
 }
@@ -42,7 +42,6 @@ Xenia_init(){
     Xenia_setupStorage
     Xenia_setupSaves
     Xenia_getPatches
-#    Xenia_finalize TODO check if we need to add some clean
     Xenia_flushEmulatorLauncher
 	if [ -e "$ESDE_toolPath" ] || [ -f "${toolsPath}/$ESDE_downloadedToolName" ] || [ -f "${toolsPath}/$ESDE_oldtoolName.AppImage" ]; then
 		Xenia_addESConfig
@@ -53,7 +52,7 @@ Xenia_init(){
 
 #update
 Xenia_update(){
-	echo "NYI"
+	echo "Xenia Canary is Updating"
 	Xenia_setupSaves
 	Xenia_setupStorage
 	Xenia_getPatches  
@@ -91,6 +90,7 @@ Xenia_addESConfig(){
 	fi
 	#Custom Systems config end
 }
+
 #SetupPatches
 Xenia_getPatches() {
 	local patches_url="https://github.com/xenia-canary/game-patches/releases/latest/download/game-patches.zip"
@@ -103,7 +103,6 @@ Xenia_getPatches() {
 		{ curl -L "$patches_url" -o "$Xenia_dir/game-patches.zip" && nice -n 5 unzip -uqo "$Xenia_dir/game-patches.zip" -d "$Xenia_dir" && rm "$Xenia_dir/game-patches.zip"; } &> /dev/null
 		echo "Xenia patches updated."
 	fi
-#	linkTo.... xenia STORAGE? or should we fusion Xenia_getPatches and Xenia_setupstorage ? 
 }
 
 #SetupSaves
@@ -198,7 +197,7 @@ Xenia_cleanESDE(){
 #	fi
 
 #	if [ -f "$romsPath/xbox360/LICENSE" ]; then
-#		mv -f "$romsPath/xbox360/LICENSE" "$romsPath/xbox360/LICENSE.TXT"
+#		mv -f "$romsPath/xbox360/LICENSE" "$romsPath/xbox360/LICENSE.TXT" TODO remove or not  
 #	fi
 
 }
